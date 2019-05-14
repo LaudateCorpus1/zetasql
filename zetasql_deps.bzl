@@ -152,9 +152,8 @@ cc_proto_library(
     if not native.existing_rule("com_google_protobuf"):
         http_archive(
             name = "com_google_protobuf",
-            urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.6.1.3.tar.gz"],
-            sha256 = "73fdad358857e120fd0fa19e071a96e15c0f23bb25f85d3f7009abfd4f264a2a",
-            strip_prefix = "protobuf-3.6.1.3",
+            urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.7.1.tar.gz"],
+            strip_prefix = "protobuf-3.7.1",
         )
 
     # gRPC
@@ -162,19 +161,18 @@ cc_proto_library(
         http_archive(
             name = "com_github_grpc_grpc",
             # Release 1.18.0
-            url = "https://github.com/grpc/grpc/archive/v1.18.0.tar.gz",
-            sha256 = "069a52a166382dd7b99bf8e7e805f6af40d797cfcee5f80e530ca3fc75fd06e2",
-            strip_prefix = "grpc-1.18.0",
+            url = "https://github.com/grpc/grpc/archive/v1.21.0-pre1.tar.gz",
+            strip_prefix = "grpc-1.21.0-pre1",
         )
 
     # gRPC Java
     if not native.existing_rule("io_grpc_grpc_java"):
+        grpc_java_version = "e48347891317e411c7a4684c5b661882c472c6ef"
         http_archive(
             name = "io_grpc_grpc_java",
             # Release 1.18.0
-            url = "https://github.com/grpc/grpc-java/archive/v1.18.0.tar.gz",
-            strip_prefix = "grpc-java-1.18.0",
-            sha256 = "0b86e44f9530fd61eb044b3c64c7579f21857ba96bcd9434046fd22891483a6d",
+            url = "https://github.com/grpc/grpc-java/archive/%s.tar.gz" % grpc_java_version,
+            strip_prefix = "grpc-java-%s" % grpc_java_version,
         )
 
     # Auto common
