@@ -18,7 +18,7 @@
 #   ZetaSQL ResolvedAST Java library.
 
 package(
-    default_visibility = ["//zetasql:__subpackages__"],
+    default_visibility = ["//visibility:public"],
 )
 
 load("//zetasql/resolved_ast:build_rules.bzl", "gen_resolved_ast_files")
