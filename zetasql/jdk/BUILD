@@ -19,16 +19,27 @@ licenses(["notice"])  # Apache v2.0
 
 package(default_visibility = ["//zetasql:__subpackages__"])
 
+genrule(
+    name = "copy_link_jni_md_header",
+    srcs = ["@bazel_tools//tools/jdk:jni_md_header-linux"],
+    outs = ["jni_md.h"],
+    cmd = "cp -f $< $@",
+)
+
+genrule(
+    name = "copy_link_jni_header",
+    srcs = ["@bazel_tools//tools/jdk:jni_header"],
+    outs = ["jni.h"],
+    cmd = "cp -f $< $@",
+)
+
 cc_library(
     name = "jni",
     srcs = [
-        "@local_jdk//:jni_header",
-        "@local_jdk//:jni_md_header-linux",
+        ":jni.h",
+        ":jni_md.h",
     ],
     copts = ["-Wno-sign-compare"],
-    includes = [
-        "../../external/local_jdk/include",
-        "../../external/local_jdk/include/linux",
-    ],
+    includes = ["."], # For jni headers
     linkstatic = 1,
 )
