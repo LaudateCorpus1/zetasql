@@ -17,7 +17,7 @@
 # Java API for ZetaSQL.
 
 package(
-    default_visibility = ["//zetasql:__subpackages__"],
+    default_visibility = ["//visibility:public"],
 )
 
 java_library(
