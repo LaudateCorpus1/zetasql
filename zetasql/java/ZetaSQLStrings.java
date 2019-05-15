@@ -36,7 +36,7 @@ public class ZetaSQLStrings {
    * @return Legal ZetaSQL identifier converted from the string.
    */
   public static String toIdentifierLiteral(String str) {
-    throw new UnsupportedOperationException();
+    return "`" + str + "`";
   }
 
   /**
@@ -115,7 +115,7 @@ public class ZetaSQLStrings {
    * @return Quoted and escaped ZetaSQL string literal.
    */
   public static String toStringLiteral(String str) {
-    throw new UnsupportedOperationException();
+    return toDoubleQuotedStringLiteral(str);
   }
 
   /**
@@ -126,7 +126,7 @@ public class ZetaSQLStrings {
    * @return Quoted and escaped ZetaSQL string literal.
    */
   public static String toSingleQuotedStringLiteral(String str) {
-    throw new UnsupportedOperationException();
+    return "\'" + str + "\'";
   }
 
   /**
@@ -137,7 +137,7 @@ public class ZetaSQLStrings {
    * @return Quoted and escaped ZetaSQL string literal.
    */
   public static String toDoubleQuotedStringLiteral(String str) {
-    throw new UnsupportedOperationException();
+    return "\"" + str + "\"";
   }
 
   /**
@@ -152,6 +152,29 @@ public class ZetaSQLStrings {
   public static String convertSimpleValueToString(Value value, boolean verbose) {
     Type type = value.getType();
     Preconditions.checkArgument(type.isSimpleType());
+    switch (type.getKind()) {
+      case TYPE_STRING:
+        return value.getStringValue();
+      case TYPE_INT32:
+        return Integer.toString(value.getInt32Value());
+      case TYPE_INT64:
+        return Long.toString(value.getInt64Value());
+      case TYPE_BOOL:
+        return Boolean.toString(value.getBoolValue());
+      case TYPE_FLOAT:
+        return Float.toString(value.getFloatValue());
+      case TYPE_DOUBLE:
+        return Double.toString(value.getDoubleValue());
+      case TYPE_BYTES:
+      case TYPE_DATE:
+      case TYPE_TIMESTAMP:
+      case TYPE_TIME:
+      case TYPE_DATETIME:
+      case TYPE_NUMERIC:
+      case TYPE_UINT32:
+      case TYPE_UINT64:
+    }
+
     throw new UnsupportedOperationException();
   }
 
