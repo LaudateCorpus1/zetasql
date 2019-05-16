@@ -152,6 +152,8 @@ public class ZetaSQLStrings {
   public static String convertSimpleValueToString(Value value, boolean verbose) {
     Type type = value.getType();
     Preconditions.checkArgument(type.isSimpleType());
+    if (value.isNull())
+      return "null";
     switch (type.getKind()) {
       case TYPE_STRING:
         return value.getStringValue();
